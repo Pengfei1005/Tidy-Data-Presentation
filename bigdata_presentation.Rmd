@@ -1,0 +1,78 @@
+---
+title: "Tidy Data"
+subtitle: "5 Most Common Problems With Messy Datasets"
+author: "Pengfei Qin"
+date: "12 April 2021"
+output:
+  xaringan::moon_reader:
+    css: ['default', 'metropolis', 'metropolis-fonts', 'my-css.css']
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE) ## Show all R output
+options(htmltools.dir.version = FALSE)
+library(pacman)
+p_load(tidyverse, dplyr, tidyr, modeldata, skimr, tidymodels, data.table)
+```
+
+
+
+# Why we need data tidying?
+
+--
+
+### Data
+
+
+- We use data for data analysis (regression or prediction), or do some larger projects (analyze pandemic trends).
+
+--
+
+</br>
+
+### Problems
+
+- The structure of the data set is not uniform (various arrangements in variables and observations).
+
+--
+
+- Data may have many disadvantages (missing values, outliers, typo). 
+
+
+---
+
+# Why we need data tidying?
+
+### Problems
+
+
+
+
+
+
+```{r}
+p=knitr::include_graphics("~/Desktop/UO/Spring2021/EC510bigdata/EC510bigdata_presentation/weird_data.jpg")
+p
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
