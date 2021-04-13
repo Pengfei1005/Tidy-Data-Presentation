@@ -38,18 +38,13 @@ p_load(tidyverse, dplyr, tidyr, modeldata, skimr, tidymodels, data.table, knitr,
 
 # Why we need data tidying?
 
---
-
-### Data
-
-
-- We use data for data analysis (regression or prediction), or do some larger projects (analyze pandemic trends).
 
 --
 
 
 ### Problems
 
+--
 
 - Data may have many disadvantages (missing values, outliers, typo). 
 
@@ -69,7 +64,7 @@ knitr::include_graphics("weird_data.jpg")
 
 - Data Tidying: Structuring datasets to facilitate analysis.
 
-- Tidy data provides us a standard method to organize the values in a dataset.
+- Tidy data provides us a standard method to organize the values in a dataset, and it can link the structure of a dataset with its semantics.
 
 --
 
@@ -77,20 +72,17 @@ knitr::include_graphics("weird_data.jpg")
 
 ### Purpose
 
-- Tidying the initial data can make subsequent data analysis easier.
+- Tidying the initial data can make the followinghu data analysis easier.
 
 --
 
 - Consistent data structure will also make our data analysis easier.
 
---
 
-- Make R happier.
 
 ---
 # The principle of tidy data
 
---
 
 ### Tidy data
 
@@ -99,6 +91,8 @@ knitr::include_graphics("weird_data.jpg")
 2. Every row is an observation.
 
 3. Each type of observational unit forms a table.
+
+--
 
 ```{r}
 dataset4 = data.frame(Song = rep(c("Song_A", "Song_B", "Song_C"), each =3),
@@ -140,9 +134,7 @@ dataset1 <- dataset1 %>%
 dataset1
 ```
 
---
 
-This form is tidy: there’s one variable in each column, and each row represents one observation.
 
 ---
 # 2. Multiple variables stored in one column
@@ -177,11 +169,17 @@ dataset2
 $~$
 ```{r}
 dataset2 <- dataset2 %>% 
-  separate(combination, c("sex", "age"),1)
+  separate(combination, c("sex", "age"),sep = "(?<=[a-z])(?=[0-9])")
+```
+
+--
+
+```{r, echo = FALSE}
 dataset2
 ```
 
-This form is tidy: there’s one variable in each column, and each row represents one observation.
+
+
 ---
 
 # 3. Variables are stored in both columns and rows.
@@ -227,7 +225,6 @@ dataset3 <- dataset3 %>%
 dataset3
 ```
 
-This form is tidy: there’s one variable in each column, and each row represents one observation.
 
 ---
 
@@ -239,7 +236,9 @@ This form is tidy: there’s one variable in each column, and each row represent
 dataset4
 ```
 
---
+---
+
+# 4. Multiple types of observational units are stored in the same table.
 
 ```{r}
 song <- dataset4 %>% 
@@ -247,15 +246,10 @@ song <- dataset4 %>%
 song
 ```
 
----
-# 4. Multiple types of observational units are stored in the same table.
-
-</br>
 
 ```{r}
 rank <- dataset4 %>%
-  left_join(song, c("Song", "Year", "Time")) %>%
-  select(Song, Date, Rank)
+  distinct(Song, Date, Rank)
 rank
 ```
 
@@ -265,19 +259,19 @@ rank
 
 --
 
-</br>
+
 
 ```{r}
-GDP_and_Tax = data.frame(City = rep(c("Beijing", "Hong Kong", "New York"), each =2),
-  'GDP'= runif(6, 100, 200),
-  'Tax_Revenue' = runif(6, 15, 25))
+GDP_and_Tax = data.frame(City = c("Beijing", "Hong Kong", "New York", "Portland", "Eugene"),
+  'GDP'= runif(5, 100, 200),
+  'Tax_Revenue' = runif(5, 15, 25))
 GDP_and_Tax
 ```
 
 ```{r}
-Energy_and_Industry = data.frame(City = rep(c("Beijing", "Hong Kong", "New York"), each =2),
-  'Energy_Consumption'= runif(6, 1900, 2000),
-  'Industrial_Output' = runif(6, 250, 300))
+Energy_and_Industry = data.frame(City = c("Beijing", "Hong Kong", "New York", "Portland", "Eugene"),
+  'Energy_Consumption'= runif(5, 1900, 2000),
+  'Industrial_Output' = runif(5, 250, 300))
 Energy_and_Industry
 ```
 
@@ -288,7 +282,7 @@ Energy_and_Industry
 </br>
 
 ```{r}
-dataset5 <- inner_join(GDP_and_Tax, Energy_and_Industry)
+dataset5 <- left_join(GDP_and_Tax, Energy_and_Industry)
 dataset5
 ```
 

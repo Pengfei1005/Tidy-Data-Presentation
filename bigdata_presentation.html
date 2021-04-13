@@ -42,18 +42,13 @@ class: center, middle, inverse, title-slide
 
 # Why we need data tidying?
 
---
-
-### Data
-
-
-- We use data for data analysis (regression or prediction), or do some larger projects (analyze pandemic trends).
 
 --
 
 
 ### Problems
 
+--
 
 - Data may have many disadvantages (missing values, outliers, typo). 
 
@@ -71,7 +66,7 @@ class: center, middle, inverse, title-slide
 
 - Data Tidying: Structuring datasets to facilitate analysis.
 
-- Tidy data provides us a standard method to organize the values in a dataset.
+- Tidy data provides us a standard method to organize the values in a dataset, and it can link the structure of a dataset with its semantics.
 
 --
 
@@ -79,20 +74,17 @@ class: center, middle, inverse, title-slide
 
 ### Purpose
 
-- Tidying the initial data can make subsequent data analysis easier.
+- Tidying the initial data can make the followinghu data analysis easier.
 
 --
 
 - Consistent data structure will also make our data analysis easier.
 
---
 
-- Make R happier.
 
 ---
 # The principle of tidy data
 
---
 
 ### Tidy data
 
@@ -101,6 +93,8 @@ class: center, middle, inverse, title-slide
 2. Every row is an observation.
 
 3. Each type of observational unit forms a table.
+
+--
 
 
 ```r
@@ -147,10 +141,10 @@ dataset1
 
 ```
 ##        name bachelor master PhD
-## 1 Company_A        4      4   5
-## 2 Company_B        7      9   4
-## 3 Company_C        5      5   1
-## 4 Company_D       10      7   9
+## 1 Company_A        7      8   6
+## 2 Company_B        6      5   1
+## 3 Company_C       10      7   5
+## 4 Company_D        5     10   2
 ```
 
 
@@ -170,23 +164,21 @@ dataset1
 ## # A tibble: 12 x 3
 ##    name      degree   frequency
 ##    &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;
-##  1 Company_A bachelor         4
-##  2 Company_A master           4
-##  3 Company_A PhD              5
-##  4 Company_B bachelor         7
-##  5 Company_B master           9
-##  6 Company_B PhD              4
-##  7 Company_C bachelor         5
-##  8 Company_C master           5
-##  9 Company_C PhD              1
-## 10 Company_D bachelor        10
-## 11 Company_D master           7
-## 12 Company_D PhD              9
+##  1 Company_A bachelor         7
+##  2 Company_A master           8
+##  3 Company_A PhD              6
+##  4 Company_B bachelor         6
+##  5 Company_B master           5
+##  6 Company_B PhD              1
+##  7 Company_C bachelor        10
+##  8 Company_C master           7
+##  9 Company_C PhD              5
+## 10 Company_D bachelor         5
+## 11 Company_D master          10
+## 12 Company_D PhD              2
 ```
 
---
 
-This form is tidy: there’s one variable in each column, and each row represents one observation.
 
 ---
 # 2. Multiple variables stored in one column
@@ -207,10 +199,10 @@ dataset2
 
 ```
 ##        name m2035 m3550 m5065 f2035 f3550 f5060
-## 1 Company_A     8    10     1     8     8     8
-## 2 Company_B    10     4     8     7     6     2
-## 3 Company_C     3     9     5     3     9     5
-## 4 Company_D     6     2     3     2     1     7
+## 1 Company_A     9     1     1     3    10     9
+## 2 Company_B     2     4     5     8     7    10
+## 3 Company_C    10     8     8     4     5     3
+## 4 Company_D     3     9    10    10     3     6
 ```
 
 ---
@@ -229,16 +221,16 @@ dataset2
 ## # A tibble: 24 x 3
 ##    name      combination frequency
 ##    &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;
-##  1 Company_A m2035               8
-##  2 Company_A m3550              10
+##  1 Company_A m2035               9
+##  2 Company_A m3550               1
 ##  3 Company_A m5065               1
-##  4 Company_A f2035               8
-##  5 Company_A f3550               8
-##  6 Company_A f5060               8
-##  7 Company_B m2035              10
+##  4 Company_A f2035               3
+##  5 Company_A f3550              10
+##  6 Company_A f5060               9
+##  7 Company_B m2035               2
 ##  8 Company_B m3550               4
-##  9 Company_B m5065               8
-## 10 Company_B f2035               7
+##  9 Company_B m5065               5
+## 10 Company_B f2035               8
 ## # … with 14 more rows
 ```
 
@@ -249,28 +241,31 @@ dataset2
 
 ```r
 dataset2 &lt;- dataset2 %&gt;% 
-  separate(combination, c("sex", "age"),1)
-dataset2
+  separate(combination, c("sex", "age"),sep = "(?&lt;=[a-z])(?=[0-9])")
 ```
+
+--
+
 
 ```
 ## # A tibble: 24 x 4
 ##    name      sex   age   frequency
 ##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;int&gt;
-##  1 Company_A m     2035          8
-##  2 Company_A m     3550         10
+##  1 Company_A m     2035          9
+##  2 Company_A m     3550          1
 ##  3 Company_A m     5065          1
-##  4 Company_A f     2035          8
-##  5 Company_A f     3550          8
-##  6 Company_A f     5060          8
-##  7 Company_B m     2035         10
+##  4 Company_A f     2035          3
+##  5 Company_A f     3550         10
+##  6 Company_A f     5060          9
+##  7 Company_B m     2035          2
 ##  8 Company_B m     3550          4
-##  9 Company_B m     5065          8
-## 10 Company_B f     2035          7
+##  9 Company_B m     5065          5
+## 10 Company_B f     2035          8
 ## # … with 14 more rows
 ```
 
-This form is tidy: there’s one variable in each column, and each row represents one observation.
+
+
 ---
 
 # 3. Variables are stored in both columns and rows.
@@ -289,15 +284,15 @@ dataset3
 ```
 
 ```
-##          city   month                   element  y2019  y2020  y2021
-## 1     Beijing January avg_environmental_quality   high    low   high
-## 2     Beijing January           avg_air_quality   high   high   high
-## 3   Hong Kong January avg_environmental_quality   high median    low
-## 4   Hong Kong January           avg_air_quality median    low   high
-## 5 Los Angeles January avg_environmental_quality median   high   high
-## 6 Los Angeles January           avg_air_quality   high median median
-## 7    New York January avg_environmental_quality   high    low   high
-## 8    New York January           avg_air_quality   high    low    low
+##          city   month                   element y2019  y2020  y2021
+## 1     Beijing January avg_environmental_quality  high median   high
+## 2     Beijing January           avg_air_quality   low   high median
+## 3   Hong Kong January avg_environmental_quality   low median    low
+## 4   Hong Kong January           avg_air_quality   low    low median
+## 5 Los Angeles January avg_environmental_quality   low median median
+## 6 Los Angeles January           avg_air_quality  high   high   high
+## 7    New York January avg_environmental_quality  high median median
+## 8    New York January           avg_air_quality   low median   high
 ```
 
 ---
@@ -323,15 +318,15 @@ dataset3
 ##    city      month   element                    year value 
 ##    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt; 
 ##  1 Beijing   January avg_environmental_quality  2019 high  
-##  2 Beijing   January avg_environmental_quality  2020 low   
+##  2 Beijing   January avg_environmental_quality  2020 median
 ##  3 Beijing   January avg_environmental_quality  2021 high  
-##  4 Beijing   January avg_air_quality            2019 high  
+##  4 Beijing   January avg_air_quality            2019 low   
 ##  5 Beijing   January avg_air_quality            2020 high  
-##  6 Beijing   January avg_air_quality            2021 high  
-##  7 Hong Kong January avg_environmental_quality  2019 high  
+##  6 Beijing   January avg_air_quality            2021 median
+##  7 Hong Kong January avg_environmental_quality  2019 low   
 ##  8 Hong Kong January avg_environmental_quality  2020 median
 ##  9 Hong Kong January avg_environmental_quality  2021 low   
-## 10 Hong Kong January avg_air_quality            2019 median
+## 10 Hong Kong January avg_air_quality            2019 low   
 ## # … with 14 more rows
 ```
 
@@ -352,21 +347,20 @@ dataset3
 ## # A tibble: 12 x 5
 ##    city        month    year avg_environmental_quality avg_air_quality
 ##    &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;                     &lt;chr&gt;          
-##  1 Beijing     January  2019 high                      high           
-##  2 Beijing     January  2020 low                       high           
-##  3 Beijing     January  2021 high                      high           
-##  4 Hong Kong   January  2019 high                      median         
+##  1 Beijing     January  2019 high                      low            
+##  2 Beijing     January  2020 median                    high           
+##  3 Beijing     January  2021 high                      median         
+##  4 Hong Kong   January  2019 low                       low            
 ##  5 Hong Kong   January  2020 median                    low            
-##  6 Hong Kong   January  2021 low                       high           
-##  7 Los Angeles January  2019 median                    high           
-##  8 Los Angeles January  2020 high                      median         
-##  9 Los Angeles January  2021 high                      median         
-## 10 New York    January  2019 high                      high           
-## 11 New York    January  2020 low                       low            
-## 12 New York    January  2021 high                      low
+##  6 Hong Kong   January  2021 low                       median         
+##  7 Los Angeles January  2019 low                       high           
+##  8 Los Angeles January  2020 median                    high           
+##  9 Los Angeles January  2021 median                    high           
+## 10 New York    January  2019 high                      low            
+## 11 New York    January  2020 median                    median         
+## 12 New York    January  2021 median                    high
 ```
 
-This form is tidy: there’s one variable in each column, and each row represents one observation.
 
 ---
 
@@ -388,7 +382,9 @@ This form is tidy: there’s one variable in each column, and each row represent
 ## 9 Song_C 2021  239 2021-04-03    1
 ```
 
---
+---
+
+# 4. Multiple types of observational units are stored in the same table.
 
 
 ```r
@@ -404,16 +400,11 @@ song
 ## 3 Song_C 2021  239
 ```
 
----
-# 4. Multiple types of observational units are stored in the same table.
-
-&lt;/br&gt;
 
 
 ```r
 rank &lt;- dataset4 %&gt;%
-  left_join(song, c("Song", "Year", "Time")) %&gt;%
-  select(Song, Date, Rank)
+  distinct(Song, Date, Rank)
 rank
 ```
 
@@ -436,42 +427,40 @@ rank
 
 --
 
-&lt;/br&gt;
+
 
 
 ```r
-GDP_and_Tax = data.frame(City = rep(c("Beijing", "Hong Kong", "New York"), each =2),
-  'GDP'= runif(6, 100, 200),
-  'Tax_Revenue' = runif(6, 15, 25))
+GDP_and_Tax = data.frame(City = c("Beijing", "Hong Kong", "New York", "Portland", "Eugene"),
+  'GDP'= runif(5, 100, 200),
+  'Tax_Revenue' = runif(5, 15, 25))
 GDP_and_Tax
 ```
 
 ```
 ##        City      GDP Tax_Revenue
-## 1   Beijing 180.6807    22.73900
-## 2   Beijing 181.1368    21.24779
-## 3 Hong Kong 108.6159    21.25485
-## 4 Hong Kong 156.1439    18.90633
-## 5  New York 111.7318    19.66630
-## 6  New York 112.4898    24.78881
+## 1   Beijing 124.4628    18.22970
+## 2 Hong Kong 132.3253    19.07070
+## 3  New York 141.2241    23.04814
+## 4  Portland 111.1015    23.03901
+## 5    Eugene 109.0037    19.02041
 ```
 
 
 ```r
-Energy_and_Industry = data.frame(City = rep(c("Beijing", "Hong Kong", "New York"), each =2),
-  'Energy_Consumption'= runif(6, 1900, 2000),
-  'Industrial_Output' = runif(6, 250, 300))
+Energy_and_Industry = data.frame(City = c("Beijing", "Hong Kong", "New York", "Portland", "Eugene"),
+  'Energy_Consumption'= runif(5, 1900, 2000),
+  'Industrial_Output' = runif(5, 250, 300))
 Energy_and_Industry
 ```
 
 ```
 ##        City Energy_Consumption Industrial_Output
-## 1   Beijing           1909.612          265.5763
-## 2   Beijing           1913.279          280.9248
-## 3 Hong Kong           1925.124          279.3627
-## 4 Hong Kong           1932.035          263.0203
-## 5  New York           1985.700          286.1806
-## 6  New York           1942.070          285.3541
+## 1   Beijing           1911.422          253.5037
+## 2 Hong Kong           1955.466          279.7608
+## 3  New York           1967.636          264.6602
+## 4  Portland           1994.574          274.6660
+## 5    Eugene           1968.240          254.2320
 ```
 
 ---
@@ -482,7 +471,7 @@ Energy_and_Industry
 
 
 ```r
-dataset5 &lt;- inner_join(GDP_and_Tax, Energy_and_Industry)
+dataset5 &lt;- left_join(GDP_and_Tax, Energy_and_Industry)
 ```
 
 ```
@@ -494,19 +483,12 @@ dataset5
 ```
 
 ```
-##         City      GDP Tax_Revenue Energy_Consumption Industrial_Output
-## 1    Beijing 180.6807    22.73900           1909.612          265.5763
-## 2    Beijing 180.6807    22.73900           1913.279          280.9248
-## 3    Beijing 181.1368    21.24779           1909.612          265.5763
-## 4    Beijing 181.1368    21.24779           1913.279          280.9248
-## 5  Hong Kong 108.6159    21.25485           1925.124          279.3627
-## 6  Hong Kong 108.6159    21.25485           1932.035          263.0203
-## 7  Hong Kong 156.1439    18.90633           1925.124          279.3627
-## 8  Hong Kong 156.1439    18.90633           1932.035          263.0203
-## 9   New York 111.7318    19.66630           1985.700          286.1806
-## 10  New York 111.7318    19.66630           1942.070          285.3541
-## 11  New York 112.4898    24.78881           1985.700          286.1806
-## 12  New York 112.4898    24.78881           1942.070          285.3541
+##        City      GDP Tax_Revenue Energy_Consumption Industrial_Output
+## 1   Beijing 124.4628    18.22970           1911.422          253.5037
+## 2 Hong Kong 132.3253    19.07070           1955.466          279.7608
+## 3  New York 141.2241    23.04814           1967.636          264.6602
+## 4  Portland 111.1015    23.03901           1994.574          274.6660
+## 5    Eugene 109.0037    19.02041           1968.240          254.2320
 ```
 
 
