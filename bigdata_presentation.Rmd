@@ -44,21 +44,12 @@ p_load(tidyverse, dplyr, tidyr, modeldata, skimr, tidymodels, data.table, knitr,
 
 ### Problems
 
---
 
-- Data may have many disadvantages (missing values, outliers, typo). 
-
-```{R, echo = F, out.width = '75%',eval = TRUE}
-knitr::include_graphics("weird_data.jpg")
-```
-
---
 
 - The structure of the data set is not uniform (various arrangements in variables and observations).
 
+--
 
----
-# Why we need data tidying?
 
 ### Solution
 
@@ -68,15 +59,13 @@ knitr::include_graphics("weird_data.jpg")
 
 --
 
-</br>
-
 ### Purpose
 
 - Tidying the initial data can make the followinghu data analysis easier.
 
 --
 
-- Consistent data structure will also make our data analysis easier.
+- Consistent structured datasets will also make our data analysis easier.
 
 
 
@@ -172,15 +161,13 @@ dataset2 <- dataset2 %>%
   separate(combination, c("sex", "age"),sep = "(?<=[a-z])(?=[0-9])")
 ```
 
---
 
 ```{r, echo = FALSE}
 dataset2
 ```
 
-
-
 ---
+
 
 # 3. Variables are stored in both columns and rows.
 
@@ -282,7 +269,7 @@ Energy_and_Industry
 </br>
 
 ```{r}
-dataset5 <- left_join(GDP_and_Tax, Energy_and_Industry)
+dataset5 <- inner_join(GDP_and_Tax, Energy_and_Industry)
 dataset5
 ```
 
