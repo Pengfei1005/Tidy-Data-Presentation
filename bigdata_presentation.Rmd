@@ -1,6 +1,6 @@
 ---
 title: "Tidy Data"
-subtitle: "5 Most Common Problems With Messy Datasets"
+subtitle: "3 Priniciples of Tidy Data And 5 Most Common Problems With Messy Datasets"
 author: "Pengfei Qin"
 date: "12 April 2021"
 output:
@@ -61,7 +61,7 @@ p_load(tidyverse, dplyr, tidyr, modeldata, skimr, tidymodels, data.table, knitr,
 
 ### Purpose
 
-- Tidying the initial data can make the followinghu data analysis easier.
+- Tidying the initial data can make the following data analysis easier.
 
 --
 

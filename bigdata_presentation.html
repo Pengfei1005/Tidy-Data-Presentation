@@ -16,7 +16,7 @@
 class: center, middle, inverse, title-slide
 
 # Tidy Data
-## 5 Most Common Problems With Messy Datasets
+## 3 Priniciples of Tidy Data And 5 Most Common Problems With Messy Datasets
 ### Pengfei Qin
 ### 12 April 2021
 
@@ -65,7 +65,7 @@ class: center, middle, inverse, title-slide
 
 ### Purpose
 
-- Tidying the initial data can make the followinghu data analysis easier.
+- Tidying the initial data can make the following data analysis easier.
 
 --
 
@@ -132,10 +132,10 @@ dataset1
 
 ```
 ##        name bachelor master PhD
-## 1 Company_A        6      5   6
-## 2 Company_B        1      8   9
-## 3 Company_C        2      7   8
-## 4 Company_D        3      4   5
+## 1 Company_A        1     10   8
+## 2 Company_B       10      7   4
+## 3 Company_C        6      5   3
+## 4 Company_D        4      6   6
 ```
 
 
@@ -155,18 +155,18 @@ dataset1
 ## # A tibble: 12 x 3
 ##    name      degree   frequency
 ##    &lt;chr&gt;     &lt;chr&gt;        &lt;int&gt;
-##  1 Company_A bachelor         6
-##  2 Company_A master           5
-##  3 Company_A PhD              6
-##  4 Company_B bachelor         1
-##  5 Company_B master           8
-##  6 Company_B PhD              9
-##  7 Company_C bachelor         2
-##  8 Company_C master           7
-##  9 Company_C PhD              8
-## 10 Company_D bachelor         3
-## 11 Company_D master           4
-## 12 Company_D PhD              5
+##  1 Company_A bachelor         1
+##  2 Company_A master          10
+##  3 Company_A PhD              8
+##  4 Company_B bachelor        10
+##  5 Company_B master           7
+##  6 Company_B PhD              4
+##  7 Company_C bachelor         6
+##  8 Company_C master           5
+##  9 Company_C PhD              3
+## 10 Company_D bachelor         4
+## 11 Company_D master           6
+## 12 Company_D PhD              6
 ```
 
 
@@ -190,10 +190,10 @@ dataset2
 
 ```
 ##        name m2035 m3550 m5065 f2035 f3550 f5060
-## 1 Company_A     7    10     8     5    10     4
-## 2 Company_B    10     4     3     3     7     6
-## 3 Company_C     9     7     6     8     3    10
-## 4 Company_D     6     1     1    10     8     5
+## 1 Company_A     2     9     2     9     4     1
+## 2 Company_B     6     7     1     1     1    10
+## 3 Company_C    10     2     8    10     2     6
+## 4 Company_D     1     1     4     7    10     9
 ```
 
 ---
@@ -212,16 +212,16 @@ dataset2
 ## # A tibble: 24 x 3
 ##    name      combination frequency
 ##    &lt;chr&gt;     &lt;chr&gt;           &lt;int&gt;
-##  1 Company_A m2035               7
-##  2 Company_A m3550              10
-##  3 Company_A m5065               8
-##  4 Company_A f2035               5
-##  5 Company_A f3550              10
-##  6 Company_A f5060               4
-##  7 Company_B m2035              10
-##  8 Company_B m3550               4
-##  9 Company_B m5065               3
-## 10 Company_B f2035               3
+##  1 Company_A m2035               2
+##  2 Company_A m3550               9
+##  3 Company_A m5065               2
+##  4 Company_A f2035               9
+##  5 Company_A f3550               4
+##  6 Company_A f5060               1
+##  7 Company_B m2035               6
+##  8 Company_B m3550               7
+##  9 Company_B m5065               1
+## 10 Company_B f2035               1
 ## # … with 14 more rows
 ```
 
@@ -241,16 +241,16 @@ dataset2 &lt;- dataset2 %&gt;%
 ## # A tibble: 24 x 4
 ##    name      sex   age   frequency
 ##    &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;     &lt;int&gt;
-##  1 Company_A m     2035          7
-##  2 Company_A m     3550         10
-##  3 Company_A m     5065          8
-##  4 Company_A f     2035          5
-##  5 Company_A f     3550         10
-##  6 Company_A f     5060          4
-##  7 Company_B m     2035         10
-##  8 Company_B m     3550          4
-##  9 Company_B m     5065          3
-## 10 Company_B f     2035          3
+##  1 Company_A m     2035          2
+##  2 Company_A m     3550          9
+##  3 Company_A m     5065          2
+##  4 Company_A f     2035          9
+##  5 Company_A f     3550          4
+##  6 Company_A f     5060          1
+##  7 Company_B m     2035          6
+##  8 Company_B m     3550          7
+##  9 Company_B m     5065          1
+## 10 Company_B f     2035          1
 ## # … with 14 more rows
 ```
 
@@ -274,14 +274,14 @@ dataset3
 
 ```
 ##          city   month                   element  y2019  y2020  y2021
-## 1     Beijing January avg_environmental_quality median   high    low
-## 2     Beijing January           avg_air_quality    low    low median
-## 3   Hong Kong January avg_environmental_quality    low    low   high
+## 1     Beijing January avg_environmental_quality median median    low
+## 2     Beijing January           avg_air_quality   high    low median
+## 3   Hong Kong January avg_environmental_quality median median median
 ## 4   Hong Kong January           avg_air_quality   high median    low
-## 5 Los Angeles January avg_environmental_quality   high    low    low
-## 6 Los Angeles January           avg_air_quality    low    low   high
-## 7    New York January avg_environmental_quality median    low   high
-## 8    New York January           avg_air_quality    low   high median
+## 5 Los Angeles January avg_environmental_quality median   high    low
+## 6 Los Angeles January           avg_air_quality median    low   high
+## 7    New York January avg_environmental_quality    low    low   high
+## 8    New York January           avg_air_quality    low   high   high
 ```
 
 ---
@@ -307,14 +307,14 @@ dataset3
 ##    city      month   element                    year value 
 ##    &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt; 
 ##  1 Beijing   January avg_environmental_quality  2019 median
-##  2 Beijing   January avg_environmental_quality  2020 high  
+##  2 Beijing   January avg_environmental_quality  2020 median
 ##  3 Beijing   January avg_environmental_quality  2021 low   
-##  4 Beijing   January avg_air_quality            2019 low   
+##  4 Beijing   January avg_air_quality            2019 high  
 ##  5 Beijing   January avg_air_quality            2020 low   
 ##  6 Beijing   January avg_air_quality            2021 median
-##  7 Hong Kong January avg_environmental_quality  2019 low   
-##  8 Hong Kong January avg_environmental_quality  2020 low   
-##  9 Hong Kong January avg_environmental_quality  2021 high  
+##  7 Hong Kong January avg_environmental_quality  2019 median
+##  8 Hong Kong January avg_environmental_quality  2020 median
+##  9 Hong Kong January avg_environmental_quality  2021 median
 ## 10 Hong Kong January avg_air_quality            2019 high  
 ## # … with 14 more rows
 ```
@@ -336,18 +336,18 @@ dataset3
 ## # A tibble: 12 x 5
 ##    city        month    year avg_environmental_quality avg_air_quality
 ##    &lt;chr&gt;       &lt;chr&gt;   &lt;int&gt; &lt;chr&gt;                     &lt;chr&gt;          
-##  1 Beijing     January  2019 median                    low            
-##  2 Beijing     January  2020 high                      low            
+##  1 Beijing     January  2019 median                    high           
+##  2 Beijing     January  2020 median                    low            
 ##  3 Beijing     January  2021 low                       median         
-##  4 Hong Kong   January  2019 low                       high           
-##  5 Hong Kong   January  2020 low                       median         
-##  6 Hong Kong   January  2021 high                      low            
-##  7 Los Angeles January  2019 high                      low            
-##  8 Los Angeles January  2020 low                       low            
+##  4 Hong Kong   January  2019 median                    high           
+##  5 Hong Kong   January  2020 median                    median         
+##  6 Hong Kong   January  2021 median                    low            
+##  7 Los Angeles January  2019 median                    median         
+##  8 Los Angeles January  2020 high                      low            
 ##  9 Los Angeles January  2021 low                       high           
-## 10 New York    January  2019 median                    low            
+## 10 New York    January  2019 low                       low            
 ## 11 New York    January  2020 low                       high           
-## 12 New York    January  2021 high                      median
+## 12 New York    January  2021 high                      high
 ```
 
 
@@ -428,11 +428,11 @@ GDP_and_Tax
 
 ```
 ##        City      GDP Tax_Revenue
-## 1   Beijing 108.5505    19.25527
-## 2 Hong Kong 176.0446    16.77734
-## 3  New York 166.8970    21.60936
-## 4  Portland 147.6798    18.24901
-## 5    Eugene 147.9533    17.92916
+## 1   Beijing 152.1743    23.06518
+## 2 Hong Kong 169.7401    23.04871
+## 3  New York 138.4658    19.79962
+## 4  Portland 142.4140    17.05990
+## 5    Eugene 189.5696    23.31076
 ```
 
 
@@ -445,11 +445,11 @@ Energy_and_Industry
 
 ```
 ##        City Energy_Consumption Industrial_Output
-## 1   Beijing           1960.160          280.0369
-## 2 Hong Kong           1949.549          285.7448
-## 3  New York           1912.763          298.5646
-## 4  Portland           1904.323          267.5130
-## 5    Eugene           1945.335          277.6177
+## 1   Beijing           1963.772          295.6302
+## 2 Hong Kong           1928.581          274.5077
+## 3  New York           1972.200          277.9449
+## 4  Portland           1964.927          259.3676
+## 5    Eugene           1909.390          294.8082
 ```
 
 ---
@@ -473,11 +473,11 @@ dataset5
 
 ```
 ##        City      GDP Tax_Revenue Energy_Consumption Industrial_Output
-## 1   Beijing 108.5505    19.25527           1960.160          280.0369
-## 2 Hong Kong 176.0446    16.77734           1949.549          285.7448
-## 3  New York 166.8970    21.60936           1912.763          298.5646
-## 4  Portland 147.6798    18.24901           1904.323          267.5130
-## 5    Eugene 147.9533    17.92916           1945.335          277.6177
+## 1   Beijing 152.1743    23.06518           1963.772          295.6302
+## 2 Hong Kong 169.7401    23.04871           1928.581          274.5077
+## 3  New York 138.4658    19.79962           1972.200          277.9449
+## 4  Portland 142.4140    17.05990           1964.927          259.3676
+## 5    Eugene 189.5696    23.31076           1909.390          294.8082
 ```
 
 
